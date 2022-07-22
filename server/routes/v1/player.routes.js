@@ -10,6 +10,6 @@ playerRouter.post("/", PlayerController.createPlayer);
 playerRouter.get("/:id", PlayerController.getPlayerById);
 playerRouter.put("/:id", PlayerController.updatePlayer);
 playerRouter.delete("/:id", PlayerController.deletePlayer);
-playerRouter.post("/exp/:id", PlayerController.updateExperience);
+playerRouter.put("/exp/:id", PlayerController.updateExperience);
 
 module.exports = playerRouter;

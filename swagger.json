@@ -1,0 +1,673 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Binar Challenge Chapter 8",
+    "description": "This is an API Documentation of a given RESTful API by Binar Academy Facilitator to complete one of Chapter 8 Challenges. The RESTful API is made for CRUD Player database. For this API Docs, you can use the api key `special-key` to test the authorization filters.",
+    "contact": {
+      "name": "enggar lokheswara",
+      "email": "enggarlokheswara13@gmail.com",
+      "url": "https:github.com/enggarlr"
+    },
+    "version": "1.0.0"
+  },
+  "servers":[
+    {
+      "url": "http://localhost:4000/api/v1",
+      "description": "Development Server"
+    },
+    {
+      "url": "http://localhost:4000/api/v1",
+      "description": "Production Server"
+    }
+  ], 
+  "tags": [
+    {
+      "name": "Players",
+      "description": "Endpoint for User of CRUD Operation"
+    }
+  ],
+  "paths": {
+    "/players": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Read all player's information",
+        "operationId": "getPlayers",
+        "description": "get all player's data from database and printed it as an array of object",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "username",
+            "schema": {
+              "type": "string",
+              "description": "player's username",
+              "example": "qwertyuiop"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "format": "email",
+              "description": "player's email address",
+              "example": "qwerty@gmail.com"
+            }
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "schema": {
+              "type": "string",
+              "minimum": 6,
+              "description": "password for authentication and authorization",
+              "example": "qwerty123"
+            }
+          },
+          {
+            "in": "query",
+            "name": "experience",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "description": "experience describe how long or how many times player had played the games",
+              "example": 450000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get all player data by request query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Player"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Create new player account",
+        "operationId": "createPlayer",
+        "requestBody": {
+          "description": "Player's information that required to create an account",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Player_Input"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Player_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201":{
+            "description": "Success to create new user ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Player"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Username or Email has already taken by other Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Username/Email already taken"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Find a Player Informations",
+        "operationId": "getPlayerById",
+        "description": "Get a player informations from database  by their ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Get a Player's data by their ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Player"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Player with inserted value of ID cannot be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Not Found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id : {id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Change a Player's Informations",
+        "operationId": "updatePlayer",
+        "description": "Select a player by their ID to change the previous stored data in database",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 4
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Player's information that can be changed in database",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_Player"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_Player"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully change a selected player's informations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "example": "Player with id : {id} successfully updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Player with inserted value of ID cannot be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Not Found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id : {id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to update Player/Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to update Player/Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Delete a selected Player data",
+        "operationId": "deletePlayer",
+        "description": "Delete a player's information from database by their ID's value",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Get a Player's data by their ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "example": "Player with id : {id}, was deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Player with inserted value of ID cannot be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cannot delete Player with id : {id}. Maybe Player was not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/exp/{id}": {
+      "put": {
+        "tags": [
+          "Players"
+        ],
+        "summary": "Update a Player's Experience",
+        "operationId": "updateExperience",
+        "description": "Select a player by their ID to update their experience",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 7
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Experience value which wanted to be added",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "exp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 50000
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "exp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 50000
+                  }
+                },
+                "required": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update Player's experience",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "SUCCESS"
+                    },
+                    "message": {
+                      "example": "Player with id : {id} gain {exp} experience. Total experience {expValue}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Player with inserted value of ID cannot be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Exp field cannot be empty/Cannot update Player with id: {id}!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Player with inserted value of ID cannot be found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "Not Found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id : {id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to update Player/Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to update Player/Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Player": {
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "username": {
+            "type": "string",
+            "example": "qwertyuiop"
+          },
+          "email": {
+            "type": "string",
+            "example": "qwerty@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "qwerty123"
+          },
+          "experience": {
+            "type": "integer",
+            "format": "int64",
+            "example": 450000
+          },
+          "lvl": {
+            "type": "integer",
+            "format": "int64",
+            "example": 450
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Player_Input": {
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "testUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "testuser@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "experience": {
+            "type": "integer",
+            "format": "int64",
+            "example": 330000
+          }
+        }
+      },
+      "Update_Player": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "testUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "testuser@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "experience": {
+            "type": "integer",
+            "format": "int64",
+            "example": 330000
+          }
+        }
+      }
+    }  
+  }
+}

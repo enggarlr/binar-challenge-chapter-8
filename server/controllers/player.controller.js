@@ -97,17 +97,17 @@ class PlayerController {
       const player = await Player.findByPk(id)
       if (!player) return res.status(404).json({ result: "Not found", message: `Player with ${id} not found` })
       const updatedPlayer = await Player.update(req.body, {
-        where: { id: id },
+        where: { id: id }
       });
       if (updatedPlayer == 1) {
         return res.status(200).json({
           result: "Success",
-          message: `Player with id: ${id} successfully updated`,
+          message: `Player with id: ${id} successfully updated`
         });
       } else {
         return res.status(500).json({
           result: "failed",
-          message: "Failed to update",
+          message: "Failed to update"
         });
       }
     } catch (error) {
@@ -119,6 +119,9 @@ class PlayerController {
     try {
       const { exp } = req.body;
       const { id } = req.params;
+      console.log(exp, "==> ini exp");
+      console.log(id, "==> ini id");
+
       if (!exp) {
         return res.status(400).json({
           result: "Failed",
@@ -146,7 +149,7 @@ class PlayerController {
         if (updateLvl == 1) {
           res.status(200).json({
             result: "SUCCESS",
-            message: `Player with id = ${id} gain ${exp} experience. Total experience = ${player.experience}`,
+            message: `Player with id = ${id} gain ${exp} experience. Total experience = ${expValue}`,
           });
         } else {
           res.status(400).json({

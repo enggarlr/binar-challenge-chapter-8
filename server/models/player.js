@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: {
           args: true,
-          msg: "Username already taken",
+          msg: 'Username already taken',
         },
         validate: {
           notEmpty: {
             args: true,
-            msg: "Username is required",
+            msg: 'Username is required',
           },
         },
       },
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: {
           args: true,
-          msg: "Email have been registered",
+          msg: 'Email have been registered',
         },
       },
       password: {
@@ -39,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             args: true,
-            msg: "Password is required, cannot be blank",
+            msg: 'Password is required, cannot be blank',
           },
           len: {
             args: [6],
-            msg: "Password minimal 6 character",
+            msg: 'Password minimal 6 character',
           },
         },
       },
@@ -57,7 +57,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       sequelize,
-      modelName: "Player",
+      modelName: 'Player',
+      tableName: 'Players'
     }
   );
   return Player;
