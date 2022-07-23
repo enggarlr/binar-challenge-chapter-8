@@ -46,8 +46,9 @@ class EditPlayer extends React.Component {
                             id="id"
                             name="id"
                             placeholder="Contoh: 1, 2, ..., etc"
-                            type="text"
+                            type="number"
                             onChange={(e) => this.onChangeInput(e)}
+                            required
                         />
                     </FormGroup>
                     <InputUsername onChange={(e) => this.onChangeInput(e)}/>

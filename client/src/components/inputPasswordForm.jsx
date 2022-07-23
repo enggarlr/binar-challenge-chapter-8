@@ -11,6 +11,7 @@ class InputPassword extends React.Component {
                     name="password"
                     placeholder="Contoh: Garaga@123"
                     type="password"
+                    minLength={"6"}
                     onChange={this.props.onChange}
                 />
             </FormGroup>

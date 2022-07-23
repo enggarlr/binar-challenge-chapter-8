@@ -46,8 +46,9 @@ class FindPlayer extends React.Component {
                             id="id"
                             name="id"
                             placeholder="Contoh: 1, 2, ..., etc"
-                            type="text"
+                            type="number"
                             onChange={(e) => this.onChange(e)}
+                            required
                         />
                     </FormGroup>
                     <InputUsername onChange={(e) => this.onChangeInput(e)}/>

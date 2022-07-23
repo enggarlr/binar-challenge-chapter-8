@@ -10,7 +10,7 @@ class InputExperience extends React.Component {
                     id="experience"
                     name="experience"
                     placeholder="Contoh: 50000"
-                    type="experience"
+                    type="number"
                     onChange={this.props.onChange}
                 />
             </FormGroup>

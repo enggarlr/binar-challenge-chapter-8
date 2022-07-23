@@ -1,9 +1,7 @@
 import React from "react";
-import { Container, Form,  Button } from "reactstrap";
+import { Container, Form,  Button, FormGroup, Label, Input} from "reactstrap";
 import {
-    InputUsername,
     InputEmail,
-    InputPassword,
     InputExperience,
     Result
 } from "../../components";
@@ -39,9 +37,30 @@ class CreatePlayer extends React.Component {
             <Container>
                 <h1>Create New Player</h1>
                 <Form onSubmit={this.handleSubmit}>
-                    <InputUsername onChange={(e) => this.onChangeInput(e)}/>
+                    <FormGroup className="mt-3">
+                        <Label for="username">Username :</Label>
+                        <Input
+                            id="username"
+                            name="username"
+                            placeholder="Contoh: PanjiSiPetualang"
+                            type="text"
+                            onChange={(e) => this.onChangeInput(e)}
+                            required
+                        />
+                    </FormGroup>
                     <InputEmail onChange={(e) => this.onChangeInput(e)}/>
-                    <InputPassword onChange={(e) => this.onChangeInput(e)}/>
+                    <FormGroup>
+                        <Label for="password">Password :</Label>
+                        <Input
+                            id="password"
+                            name="password"
+                            placeholder="Contoh: Garaga@123"
+                            type="password"
+                            minLength={"6"}
+                            onChange={(e) => this.onChangeInput(e)}
+                            required
+                        />
+                    </FormGroup>
                     <InputExperience onChange={(e) => this.onChangeInput(e)}/>
                     <Button 
                         type="submit" 
