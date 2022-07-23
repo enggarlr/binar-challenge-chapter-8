@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  CreatePlayer,
+  EditPlayer,
+  FindPlayer,
+  LandingPage
+} from "./pages/index";
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/create-player" element={<CreatePlayer />} />
+          <Route path="/edit-player" element={<EditPlayer />} />
+          <Route path="/find-player" element={<FindPlayer />} />
+        </Routes>
+      </>
+    )
+  } 
 }
 
 export default App;
